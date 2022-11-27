@@ -1,0 +1,10 @@
+{
+    "name": "finder/ohdb",
+    "autoload": {
+        "psr-4": {
+            "Finder\\Ohdb\\": "src/"
+        }
+    },
+    "minimum-stability": "beta",
+    "require": {}
+}
