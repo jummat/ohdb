@@ -3,12 +3,12 @@
 initializing
 
 ```php
-> $ohdb = new Ohdb;
+$ohdb = new Ohdb;
 ```
 
 ### install 
 ```php
-> $ohdb->config->__install();
+$ohdb->config->__install();
 ```
 
 required for only ** very first ** time of installation
@@ -20,23 +20,23 @@ required for only ** very first ** time of installation
 create a new table
 
 ```php
-> $cols = [
->    'id' => [
->        'type' => 'int',
->        'length' => 11,
->        'primary_key' => true
->    ],
->    'first_col' => [
->        'type' => 'text',
->        'length' => 255
->    ],
->    'second_col' => [
->        'type' => 'text',
->        'length' => 25
->    ]
-> ];
+ $cols = [
+    'id' => [
+        'type' => 'int',
+        'length' => 11,
+        'primary_key' => true
+    ],
+    'first_col' => [
+        'type' => 'text',
+        'length' => 255
+    ],
+    'second_col' => [
+        'type' => 'text',
+        'length' => 25
+    ]
+ ];
 ```
 
 ```php
-> $ohdb->table->createTable("FruitData", $cols);
+ $ohdb->table->createTable("FruitData", $cols);
 ```
