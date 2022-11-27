@@ -2,10 +2,14 @@
 
 initializing
 
+```php
 > $ohdb = new Ohdb;
+```
 
 ### install 
+```php
 > $ohdb->config->__install();
+```
 
 required for only ** very first ** time of installation
 
@@ -15,6 +19,7 @@ required for only ** very first ** time of installation
 
 create a new table
 
+```php
 > $cols = [
 >    'id' => [
 >        'type' => 'int',
@@ -30,5 +35,8 @@ create a new table
 >        'length' => 25
 >    ]
 > ];
+```
 
+```php
 > $ohdb->table->createTable("FruitData", $cols);
+```
