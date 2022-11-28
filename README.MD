@@ -1,3 +1,8 @@
+# ohdb
+
+ohdb is a light weight no sql database.It's fully writen with php
+no framework or dependency is used to develope. It has developed with pure php
+
 ## Installation
 
 initializing
