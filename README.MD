@@ -8,6 +8,8 @@ no framework or dependency is used to develope. It has developed with pure php
 initializing
 
 ```php
+use Finder\Ohdb\Ohdb;
+
 $ohdb = new Ohdb;
 ```
 
@@ -16,7 +18,7 @@ $ohdb = new Ohdb;
 $ohdb->config->__install();
 ```
 
-required for only ** very first ** time of installation
+required for only __very first__ time of installation
 
 ## Basic usage
 
@@ -45,3 +47,27 @@ create a new table
 ```php
  $ohdb->table->createTable("FruitData", $cols);
 ```
+
+### Save data
+
+```php
+$ohdb->table->saveData($data)
+```
+
+> NB: To store data into a new table call the create table function first and than call save method
+> saveData mehod will automatically detect the table name from creaetTable method
+
+### Edit data into table 
+
+```php
+$ohdb->edit->editData($id, $tableName, $dataToBeUpdate);
+```
+
+### Delete data
+
+```php
+$ohdb->delete($id, $tableName);
+```
+
+**For full documentation**
+Visit [https://org-home.com/ohdb]
