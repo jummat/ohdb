@@ -1,10 +1,19 @@
 {
     "name": "finder/ohdb",
+    "description": "Nosql package source",
+    "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Finder\\Ohdb\\": "src/"
         }
     },
-    "minimum-stability": "beta",
+    "authors": [
+        {
+            "name": "Jummat",
+            "email": "107148662+jummat@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev",
     "require": {}
 }
