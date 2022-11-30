@@ -15,6 +15,6 @@
             "email": "107148662+jummat@users.noreply.github.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {}
 }
