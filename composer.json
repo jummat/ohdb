@@ -3,6 +3,7 @@
     "description": "Nosql package source",
     "type": "library",
     "license": "MIT",
+    "version": "1.0.0",
     "autoload": {
         "psr-4": {
             "Finder\\Ohdb\\": "src/"
