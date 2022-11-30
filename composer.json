@@ -1,6 +1,6 @@
 {
     "name": "finder/ohdb",
-    "description": "Nosql package source",
+    "description": "Nosql Database - PHP package",
     "type": "library",
     "license": "MIT",
     "version": "1.0.0",
