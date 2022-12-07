@@ -75,7 +75,7 @@ class Data
     public function grabSingle(string $tableName, int $id)
     {
         $result = [];
-        $index = 0;
+        $index = '';
         $this->tableConfig->getConfig($tableName);
         $primaryKey = $this->tableConfig->getPrimaryKey();
         $primaryFile = $this->dbDir . $tableName . "/" . $primaryKey . ".oh";
@@ -92,26 +92,30 @@ class Data
                 }
             }
         }
-        $configFile = $this->dbDir . $tableName . "/config.ohx";
-        $openConfig = fopen($configFile, "r");
-        $data = fread($openConfig, filesize($configFile));
-        fclose($openConfig);
-        $data = json_decode($data, true);
-        foreach ($data as $key => $value) {
-            if ($key != $this->tableConfig->getPrimaryKey()) {
-                $colPath = $this->dbDir . $tableName . "/" . $key . ".oh";
-                if (is_file($colPath)) {
-                    $open = fopen($colPath, "r");
-                    $data = fread($open, filesize($colPath));
-                    fclose($open);
-                    $exp = explode(";", $data);
-                    $data = $exp[$index];
-                    $data = json_decode($data, true);
-                    $result[$key] = $data[0];
+        if ($index != '') {
+            $configFile = $this->dbDir . $tableName . "/config.ohx";
+            $openConfig = fopen($configFile, "r");
+            $data = fread($openConfig, filesize($configFile));
+            fclose($openConfig);
+            $data = json_decode($data, true);
+            foreach ($data as $key => $value) {
+                if ($key != $this->tableConfig->getPrimaryKey()) {
+                    $colPath = $this->dbDir . $tableName . "/" . $key . ".oh";
+                    if (is_file($colPath)) {
+                        $open = fopen($colPath, "r");
+                        $data = fread($open, filesize($colPath));
+                        fclose($open);
+                        $exp = explode(";", $data);
+                        $data = $exp[$index];
+                        $data = json_decode($data, true);
+                        $result[$key] = $data[0];
+                    }
                 }
             }
+            return $result;
+        } else {
+            return "Primary key (" . $this->tableConfig->getPrimaryKey() . " [$id]) is not found in database";
         }
-        return $result;
     }
 
     public function rows(string $tableName, array $data)

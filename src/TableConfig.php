@@ -23,14 +23,15 @@ class TableConfig
     public function getPrimaryKey()
     {
         $data = $this->configData;
-        $key = "";
+        $primaryKey = "";
         foreach ($data as $key => $value) {
-            $primarykey = @$value['primary_key'];
-            if ($primarykey != false) {
-                $key = $key;
+            foreach ($value as $k => $v) {
+                if ($k == "primary_key") {
+                    $primaryKey = $key;
+                }
             }
         }
-        return !empty($key) ? $key : "No primary key found";
+        return $primaryKey;
     }
 
     public function dataType(string $field)

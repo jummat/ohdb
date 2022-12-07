@@ -69,5 +69,7 @@ $ohdb->edit->editData($id, $tableName, $dataToBeUpdate);
 $ohdb->delete($id, $tableName);
 ```
 
+> last update 12/07/2022 10:37
+
 **For full documentation**
 Visit [https://org-home.com/ohdb]
