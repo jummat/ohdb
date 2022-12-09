@@ -17,7 +17,7 @@ class Config
         }
     }
 
-    public function __install ()
+    public function __install()
     {
         $path = $this->config['rootDir'];
         if (!is_dir($path)) {
@@ -25,7 +25,7 @@ class Config
         }
     }
 
-    public function returnConfig ()
+    public function returnConfig()
     {
         return $this->config;
     }

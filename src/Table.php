@@ -7,9 +7,12 @@ class Table
 
     public function __construct()
     {
-        $this->config = new Config;
-        $this->dbDir = $this->config->returnConfig()['rootDir'];
-        $this->tableCong = new TableConfig;
+        $license = new License;
+        if ($license->license() == true && $license->licenseValidation() == true) {
+            $this->config = new Config;
+            $this->dbDir = $this->config->returnConfig()['rootDir'];
+            $this->tableCong = new TableConfig;
+        }
     }
 
     public function createTable(string $stableName, array $column)
@@ -87,7 +90,14 @@ class Table
                 if ($unique == true) {
                     $q = $this->tableCong->checkUnique($colPath, $value);
                     if ($q == true) {
-                        $errors .= 1;
+                        if ($this->tableCong->colValueLength($key) >= strlen($value)) {
+                            $finalData = json_encode($toSaveData) . ";";
+                            $open = fopen($colPath, "a");
+                            fwrite($open, "data exist");
+                            fclose($open);
+                        } else {
+                            $errors .= 1;
+                        }
                     } else {
                         if ($this->tableCong->colValueLength($key) >= strlen($value)) {
                             $finalData = json_encode($toSaveData) . ";";

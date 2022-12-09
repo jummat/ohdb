@@ -6,9 +6,12 @@ class Data
 {
     public function __construct()
     {
-        $this->config = new Config;
-        $this->dbDir = $this->config->returnConfig()['rootDir'];
-        $this->tableConfig = new TableConfig;
+        $license = new License;
+        if ($license->license() == true && $license->licenseValidation() == true) {
+            $this->config = new Config;
+            $this->dbDir = $this->config->returnConfig()['rootDir'];
+            $this->tableConfig = new TableConfig;
+        }
     }
 
     private function purifyData(array $allData)

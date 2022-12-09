@@ -6,8 +6,11 @@ class TableConfig
 {
     public function __construct()
     {
-        $this->config = new Config;
-        $this->rootDir = $this->config->returnConfig()['rootDir'];
+        $license = new License;
+        if ($license->license() == true && $license->licenseValidation() == true) {
+            $this->config = new Config;
+            $this->rootDir = $this->config->returnConfig()['rootDir'];
+        }
     }
 
     public function getConfig(string $table)
