@@ -14,7 +14,7 @@ class Ohdb
     {
         $this->license = new License;
         if ($this->license->license() == false) {
-            print ("License not found");
+            print("License not found");
         } else {
             $this->license->licenseValidation();
             $this->config = new Config;
@@ -23,4 +23,11 @@ class Ohdb
             $this->data = new Data;
         }
     }
+    
+    public function __destruct()
+    {
+        $clear = new Clear;
+        $clear->clear();
+    }
+
 }

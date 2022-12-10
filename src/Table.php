@@ -12,20 +12,23 @@ class Table
             $this->config = new Config;
             $this->dbDir = $this->config->returnConfig()['rootDir'];
             $this->tableCong = new TableConfig;
+            $this->stat = new Stat;
+            $this->errorHandler = new Errorhandler;
         }
     }
 
     public function createTable(string $stableName, array $column)
     {
-        $this->tableName = $stableName;;
+        $this->tableName = $stableName;
+        array_push(Clear::$tables, $stableName);
         $path = $this->dbDir . $stableName . "/";
         $this->tablePath = $path;
         if (!is_dir($path)) {
             mkdir($path);
+            $this->stat->clientStat("Table created [$stableName]");
         }
         $configFile = $path . "config.ohx";
         if (!is_file($configFile)) {
-            touch($configFile);
             $fopen = fopen($configFile, "w");
             fwrite($fopen, json_encode($column));
             fclose($fopen);
@@ -72,11 +75,13 @@ class Table
             if ($key != $primary) {
                 if ($dataType == "text") {
                     if (!is_string($value)) {
-                        $errors .= "type error $key";
+                        $errors .= 1;
+                        $this->errorHandler->setErrorLog("column [$key], set data-type [text/string], inserted value is not [string]");
                     }
                 } else if ($dataType == "int") {
                     if (!is_int($value)) {
                         $errors .= "type error $key";
+                        $this->errorHandler->setErrorLog("column [$key], set data-type [int], inserted value is not [int]");
                     }
                 }
             }
@@ -93,8 +98,9 @@ class Table
                         if ($this->tableCong->colValueLength($key) >= strlen($value)) {
                             $finalData = json_encode($toSaveData) . ";";
                             $open = fopen($colPath, "a");
-                            fwrite($open, "data exist");
+                            fwrite($open, "NULL");
                             fclose($open);
+                            $this->errorHandler->setErrorLog("column [$key], set unique [true], value already exist");
                         } else {
                             $errors .= 1;
                         }
@@ -121,6 +127,7 @@ class Table
                     }
                 }
             }
+            $this->stat->clientStat("Data inserted to [$this->tableName]");
             $primaryKey = $this->tableCong->getPrimaryKey();
             $primaryKeyPath = $this->tablePath . $primaryKey . ".oh";
             $finalData = json_encode($this->autoIncrement($this->tableName)) . ";";

@@ -97,7 +97,7 @@ class License
             $auth = $this->extract->auth();
             $licenseAuth = $this->extract->licenseAuth();
             if ($auth == $licenseAuth) {
-                return true;
+                return $this->extract->checkExpiry();
             } else {
                 print("License is ivalid");
             }

@@ -6,6 +6,8 @@ include "vendor/autoload.php";
 
 $ohdb = new Ohdb;
 
+// $ohdb->config->__install();
+
 $ohdb->license->setLicense("C:\Users\Monwar Shanto\Downloads\license.txt");
 $ohdb->license->setAuth("C:\Users\Monwar Shanto\Downloads\auth.ohx");
 

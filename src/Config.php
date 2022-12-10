@@ -23,6 +23,7 @@ class Config
         if (!is_dir($path)) {
             mkdir($path);
         }
+        Clear::purify();
     }
 
     public function returnConfig()
