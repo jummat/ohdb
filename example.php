@@ -30,7 +30,7 @@ $cols = [
 $ohdb->table->createTable("test", $cols);
 
 $saveData  = [
-    'name' => "Test user",
+    'name' => "Test user 5",
     'age' => 21
 ];
 
@@ -56,8 +56,10 @@ $datas = [
 
 // $ohdb->table->saveData($datas);
 
+$ohdb->edit->delete("9", "test");
+
 
 print "<pre>";
 
-$datas = $ohdb->data->grabSingle('test', 1);
+$datas = $ohdb->data->grabAll('test');
 print_r($datas);

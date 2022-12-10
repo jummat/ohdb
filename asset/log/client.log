@@ -2,4 +2,16 @@ Table created [test];
 Table created [test];
 Table created [data];
 Data inserted to [test];
-Data inserted to [data];
+Data inserted to [data];Data inserted to [test];
+Data inserted to [test];
+Data inserted to [test];
+Data inserted to [test];
+Data inserted to [test];
+Data inserted to [test];
+Data inserted to [test];
+Data inserted to [test];
+Data deleted from [test], row id [5];
+Data deleted from [test], row id [9];
+Data inserted to [test]; time-10-12-2022 16:14;longTime-10-December-2022 04:14:47:12:pm;timeStamp-1670685287 
+Data inserted to [test]; time-10-12-2022 16:14;longTime-10-December-2022 04:14:52:12:pm;timeStamp-1670685292 
+Data inserted to [test]; time-10-12-2022 16:14;longTime-10-December-2022 04:14:57:12:pm;timeStamp-1670685297 

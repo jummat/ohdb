@@ -11,6 +11,8 @@ class Edit
             $this->config = new Config;
             $this->dbDir = $this->config->returnConfig()['rootDir'];
             $this->tableConfig = new TableConfig;
+            $this->stat = new Stat;
+            $this->errorHandler = new Errorhandler;
         }
     }
 
@@ -58,11 +60,12 @@ class Edit
                 }
             }
         }
+        $this->stat->clientStat("Data edite to [$tableName], row id [$id]");
     }
 
     public function delete(int $id, string $tableName)
     {
-        $index = 0;
+        $index = null;
         $this->tableConfig->getConfig($tableName);
         $primaryKey = $this->tableConfig->getPrimaryKey();
         $primaryFile = $this->dbDir . $tableName . "/" . $primaryKey . ".oh";
@@ -104,6 +107,11 @@ class Edit
                     fclose($open);
                 }
             }
+        }
+        if ($index != null) {
+            $this->stat->clientStat("Data deleted from [$tableName], row id [$id]");
+        } else {
+            $this->errorHandler->setErrorLog("$primaryKey (primary key) [$id] has already removed or may not exist in table [$tableName]");
         }
     }
 }
