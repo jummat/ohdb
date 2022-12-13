@@ -8,6 +8,8 @@ class Config
 
     public function __construct()
     {
+        $this->license = new License;
+        $this->checkPhpVersion();
         if (count($this->config) == 0) {
             $this->config = [
                 'rootDir' => $_SERVER['DOCUMENT_ROOT'] . "/../ohdb/",
@@ -34,4 +36,12 @@ class Config
         $this->license->clearAdditionalLicenseDir($path);
         return $this->config;
     }
+
+    public function checkPhpVersion ()
+    {
+        if (PHP_VERSION_ID < 80110){
+            exit("YOur current php version id is" . PHP_VERSION_ID . "Minimum required 80110");
+        }      
+    }
+
 }

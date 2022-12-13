@@ -59,7 +59,10 @@ class License
                 }
             }
         } else {
-            die("License file not found");
+            $lsFile = $this->assetDir . "key/license.txt";
+            if (!is_file($lsFile)) {
+                exit("License file not found");
+            }
         }
     }
 
@@ -81,7 +84,10 @@ class License
                 }
             }
         } else {
-            die("Auth file not found");
+            $authFile = $this->assetDir . "auth/auth.ohx";
+            if(!is_file($authFile)) {
+                exit("Auth file not fount");
+            }
         }
     }
 
@@ -112,8 +118,6 @@ class License
                 $filePath = $path . $item;
                 if (is_file($filePath)) {
                     unlink($filePath);
-                } else if (is_dir($filePath)) {
-                    $this->clearAdditionalLicenseDir($filePath);
                 }
             }
             rmdir($path);
