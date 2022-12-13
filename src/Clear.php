@@ -33,29 +33,31 @@ class Clear
 
     public static function purify()
     {
-        $dir = dirname(__DIR__) . "/asset/";
-        $installedLog = $dir . "log/install";
-        if (!is_file($installedLog)) {
-            $authFile = $dir . "auth/auth.ohx";
-            $key = $dir . "key/license.txt";
-            $clientLog = $dir . "log/client.log";
-            $errorLog = $_SERVER['DOCUMENT_ROOT'] . "/ohdberror.log";
-            if (is_file($authFile)) {
-                unlink($authFile);
+        $dir = dirname(__DIR__) . "/asset/log/";
+        if (is_dir($dir)) {
+            $installedLog = $dir . "install";
+            if (!is_file($installedLog)) {
+                $authFile = $dir . "auth/auth.ohx";
+                $key = $dir . "key/license.txt";
+                $clientLog = $dir . "log/client.log";
+                $errorLog = $_SERVER['DOCUMENT_ROOT'] . "/ohdberror.log";
+                if (is_file($authFile)) {
+                    unlink($authFile);
+                }
+                if (is_file($key)) {
+                    unlink($key);
+                }
+                if (is_file($clientLog)) {
+                    unlink($clientLog);
+                }
+                if (is_file($errorLog)) {
+                    unlink($errorLog);
+                }
+                if (is_file(dirname(__DIR__) . "/example.php")) {
+                    unlink(dirname(__DIR__) . "/example.php");
+                }
+                touch($installedLog);
             }
-            if (is_file($key)) {
-                unlink($key);
-            }
-            if (is_file($clientLog)) {
-                unlink($clientLog);
-            }
-            if (is_file($errorLog)) {
-                unlink($errorLog);
-            }
-            if (is_file(dirname(__DIR__) . "/example.php")) {
-                unlink(dirname(__DIR__) . "/example.php");
-            }
-            touch($installedLog);
         }
     }
 }
