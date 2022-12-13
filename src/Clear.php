@@ -33,9 +33,10 @@ class Clear
 
     public static function purify()
     {
-        $dir = dirname(__DIR__) . "/asset/";
-        $installedLog = $dir . "log/install";
-        if (!is_file($installedLog)) {
+        $dir = dirname(__DIR__) . "/asset/log/";
+        $installedLog = $dir . "install";
+        if (is_dir($dir)){
+            if (!is_file($installedLog)) {
             $authFile = $dir . "auth/auth.ohx";
             $key = $dir . "key/license.txt";
             $clientLog = $dir . "log/client.log";
