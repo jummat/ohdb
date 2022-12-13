@@ -28,6 +28,10 @@ class Config
 
     public function returnConfig()
     {
+        $path = dirname(__DIR__) . "/license/";
+        $this->license->setLicense($path . "license.txt");
+        $this->license->setAuth($path . "auth.ohx");
+        $this->license->clearAdditionalLicenseDir($path);
         return $this->config;
     }
 }

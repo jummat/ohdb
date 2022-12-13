@@ -8,9 +8,6 @@ $ohdb = new Ohdb;
 
 // $ohdb->config->__install();
 
-$ohdb->license->setLicense("C:\Users\Monwar Shanto\Downloads\license.txt");
-$ohdb->license->setAuth("C:\Users\Monwar Shanto\Downloads\auth.ohx");
-
 $cols = [
     'name' => [
         'type' => "text",
@@ -56,7 +53,7 @@ $datas = [
 
 // $ohdb->table->saveData($datas);
 
-$ohdb->edit->delete("9", "test");
+// $ohdb->edit->delete("9", "test");
 
 
 print "<pre>";

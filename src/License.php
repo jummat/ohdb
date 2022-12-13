@@ -59,7 +59,7 @@ class License
                 }
             }
         } else {
-            die("File not found");
+            die("License file not found");
         }
     }
 
@@ -81,7 +81,7 @@ class License
                 }
             }
         } else {
-            die("File not found");
+            die("Auth file not found");
         }
     }
 
@@ -101,6 +101,22 @@ class License
             } else {
                 print("License is ivalid");
             }
+        }
+    }
+
+    public function clearAdditionalLicenseDir($path)
+    {
+        if (is_dir($path)) {
+            $scan = scandir($path);
+            foreach ($scan as $item) {
+                $filePath = $path . $item;
+                if (is_file($filePath)) {
+                    unlink($filePath);
+                } else if (is_dir($filePath)) {
+                    $this->clearAdditionalLicenseDir($filePath);
+                }
+            }
+            rmdir($path);
         }
     }
 }
