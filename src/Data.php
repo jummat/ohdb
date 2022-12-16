@@ -127,10 +127,14 @@ class Data
             foreach ($data as $k => $v) {
                 $path = $this->dbDir . $tableName . "/" . $k . ".oh";
                 if (is_file($path)) {
-                    $open = fopen($path, "r");
-                    $text = fread($open, filesize($path));
-                    fclose($open);
-                    return substr_count($text, $v);
+                    if (filesize($path) > 0) {
+                        $open = fopen($path, "r");
+                        $text = fread($open, filesize($path));
+                        fclose($open);
+                        return substr_count(stripslashes($text), $v);
+                    } else {
+                        return 0;
+                    }
                 }
             }
         }
@@ -165,16 +169,97 @@ class Data
             fclose($openConfig);
             $data = json_decode($data, true);
             foreach ($data as $key => $value) {
-                if ($key != $this->tableConfig->getPrimaryKey()) {
-                    $colPath = $this->dbDir . $table . "/" . $key . ".oh";
-                    if (is_file($colPath)) {
-                        $open = fopen($colPath, "r");
-                        $data = fread($open, filesize($colPath));
-                        fclose($open);
-                        $exp = explode(";", $data);
-                        $data = $exp[$index];
-                        $data = json_decode($data, true);
+                $colPath = $this->dbDir . $table . "/" . $key . ".oh";
+                if (is_file($colPath)) {
+                    $open = fopen($colPath, "r");
+                    $data = fread($open, filesize($colPath));
+                    fclose($open);
+                    $exp = explode(";", $data);
+                    $data = $exp[$index];
+                    $data = json_decode($data, true);
+                    if (is_string($data)) {
+                        $result[$key] = $data;
+                    } else if (is_array($data)) {
                         $result[$key] = $data[0];
+                    }
+                }
+            }
+            return $result;
+        }
+    }
+
+    protected function grabDataByIndex(string $table, int $index)
+    {
+        $result = [];
+        $configFile = $this->dbDir . $table . "/config.ohx";
+        $openConfig = fopen($configFile, "r");
+        $data = fread($openConfig, filesize($configFile));
+        fclose($openConfig);
+        $data = json_decode($data, true);
+        foreach ($data as $key => $value) {
+            $colPath = $this->dbDir . $table . "/" . $key . ".oh";
+            if (is_file($colPath)) {
+                $open = fopen($colPath, "r");
+                $data = fread($open, filesize($colPath));
+                fclose($open);
+                $exp = explode(";", $data);
+                $data = $exp[$index];
+                $data = json_decode($data, true);
+                if (is_string($data)) {
+                    $result[$key] = $data;
+                } else if (is_array($data)) {
+                    $result[$key] = $data[0];
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function search(string $tableName, array $data)
+    {
+        if (count($data) == 1) {
+            $indexs = [];
+            $result = [];
+            foreach ($data as $key => $value) {
+                $value = strtolower($value);
+                $dbPath = $this->dbDir . $tableName . "/" . $key . ".oh";
+                if (is_file($dbPath)) {
+                    if (filesize($dbPath) > 0) {
+                        $stream = fopen($dbPath, "r");
+                        $text = fread($stream, filesize($dbPath));
+                        fclose($stream);
+                        $explodeText = explode(";", $text);
+                        foreach ($explodeText as $k => $val) {
+                            $val = strtolower($val);
+                            $string = json_decode($val, true);
+                            $plainTExt = "";
+                            if (is_string($string)) {
+                                $plainTExt = $string;
+                            } else if (is_array($string)) {
+                                $plainTExt = $string[0];
+                            }
+                            if (strpos($plainTExt, $value) !== false) {
+                                array_push($indexs, $k);
+                            }
+                        }
+                    }
+                }
+            }
+            $configFile = $this->dbDir . $tableName . "/config.ohx";
+            $openConfig = fopen($configFile, "r");
+            $data = fread($openConfig, filesize($configFile));
+            fclose($openConfig);
+            $data = json_decode($data, true);
+            foreach ($data as $ck => $cv) {
+                $colPath = $this->dbDir . $tableName . "/" . $key . ".oh";
+                if (is_file($colPath)) {
+                    $open = fopen($colPath, "r");
+                    $data = fread($open, filesize($colPath));
+                    fclose($open);
+                    $exp = explode(";", $data);
+                    foreach ($indexs as $i) {
+                        $res = $this->grabDataByIndex($tableName, $i);
+                        array_push($result, $res);
                     }
                 }
             }
